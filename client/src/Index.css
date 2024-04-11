@@ -1,0 +1,31 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+*{
+    margin: 0;
+    padding: 0;
+  }
+  body {
+    font-family: sans-serif;
+    background: linear-gradient(to right,#141e30, #243b55);
+  }
+  
+  ::-webkit-scrollbar {
+    width: 4px;
+  }
+  
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: #243b55 ;
+  }
+  
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: #141e30;
+  }
+  
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: red;
+  }
