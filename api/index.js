@@ -6,16 +6,8 @@ const userRoutes = require ("./routes/user.routes.js")
 const cors = require ("cors");
 const cookieParser = require ('cookie-parser');
 const mongoose = require("mongoose");
+const path = require('path')
 require('dotenv').config()
-
-const app = express();
-
-
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-app.use(cors({withCredentials: true}))
-app.use(cookieParser())
-
 
 const connection = ()=>{ 
     mongoose.connect(process.env.MONGO_URI)
@@ -28,6 +20,18 @@ const connection = ()=>{
 
 connection()
 
+const __dirname = path.resolve()
+
+const app = express();
+
+
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(cors({credentials: true}))
+app.use(cookieParser())
+
+
+
 app.get('/',(req,res)=>{
     res.send("Hello")
 })
@@ -36,7 +40,11 @@ app.use('/api/auth',authRoutes)
 app.use('/api/todo',todoRoutes)
 app.use('/api/user',userRoutes)
 
+app.use(express.static(path.join(__dirname,'/client/dist')))
 
+app.get('*',(req,res)=>{
+    res.sendFile(path.join(__dirname,'client','dist','index.html'))
+})
 
 app.listen(3000,()=>{
     console.log("Hello world!")
