@@ -63,7 +63,7 @@ const Header = () => {
   return (
     <>
       <header>
-            <h2 className='uppercase text-2xl font-bold max-md:ml-5 ml-10  select-none'>{currentUser.username}</h2>
+            <h2 className='uppercase text-2xl font-bold max-md:ml-5 ml-10  select-none'>{ currentUser ? currentUser.username : ""}</h2>
             <i  
             className="fa-solid fa-bars max-md:block hidden fa-xl text-white max-md:mr-5 mr-10 cursor-pointer"
             onClick={()=>setToggleMenu(!toggleMenu)}
