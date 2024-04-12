@@ -11,7 +11,9 @@ const Home = () => {
   const [check,setCheck] = useState(false)
   const [todoAdded , setTodoAdded] = useState(false)
   const { currentUser } = useSelector(state=>state.user.user)
-  
+  const [ loading , setLoading ] = useState(false)
+
+
   useEffect(() => {
     const verifyCookie = async () => {
       const myCookie = Cookie.get('authentic_Token')
@@ -26,6 +28,7 @@ const Home = () => {
   const handleTodoSubmit = async (e)=>{
     e.preventDefault();
     try {
+      setLoading(true);
       const res = await fetch('/api/todo/add',{
         method: "POST",
         headers:{
@@ -40,12 +43,15 @@ const Home = () => {
       const data = await res.json();
       if(data.success === false){
         console.log(data.message);
+        setLoading(false)
         return;
       }
       setTodo('')
+      setLoading(false)
       setTodoAdded(!todoAdded)
     } catch (error) {
       console.log(error);
+      setLoading(false)
     }
   }
 
@@ -71,7 +77,7 @@ const Home = () => {
         <span></span>
         <span></span>
         <span></span>
-        Add</button>
+        {loading ? 'Adding...' : 'Add'}</button>
       </form>
       
       <h1 className='text-3xl mt-10 text-center mb-4 font-bold'>Your Tasks</h1>
